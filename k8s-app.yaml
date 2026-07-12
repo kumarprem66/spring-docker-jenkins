@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: kuberprem
+  name: kuberpremji
 
 ---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kuber-app-deployment
-  namespace: kuberprem
+  name: dockerkuber-app-deployment
+  namespace: kuberpremji
 
 spec:
   replicas: 3
@@ -25,8 +25,8 @@ spec:
 
     spec:
       containers:
-        - name: kuber-app-container
-          image: kumarpremji/spring-docker-jenkins:1.0.0-12
+        - name: dockerkuber-app-container
+          image: kumarpremji/spring-docker-jenkins:1.0.0-13
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8083
@@ -36,8 +36,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kuberapp-service
-  namespace: kuberprem
+  name: dockerkuberapp-service
+  namespace: kuberpremji
 
 spec:
   selector:
