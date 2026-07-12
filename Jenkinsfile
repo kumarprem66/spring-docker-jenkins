@@ -42,9 +42,7 @@ pipeline {
         stage('Deploy image to Hub'){
             steps{
                 withCredentials([string(credentialsId: 'sdj', variable: 'dp')]) {
-                    bat '''
-                    echo %dp% | docker login -u %DOCKER_USER% --password-stdin
-                    '''
+                    bat 'docker login -u kumarpremji -p %dp%'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
                 }
             }
