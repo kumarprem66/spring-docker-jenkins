@@ -47,15 +47,14 @@ pipeline {
                 }
             }
         }
-        stage('Verify Kubernetes'){
-            steps {
-                bat 'kubectl config current-context'
-                bat 'kubectl cluster-info'
-            }
-        }
 
-        stage('Deploy to kubernetes'){
-            steps{
+        stage('Deploy to Kubernetes') {
+            environment {
+                KUBECONFIG = 'C:\\Users\\Prem.Kumar\\.kube\\config'
+            }
+            steps {
+                bat 'echo %KUBECONFIG%'
+                bat 'kubectl config current-context'
                 bat 'kubectl apply -f k8s-app.yaml'
             }
         }
