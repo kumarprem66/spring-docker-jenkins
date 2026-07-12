@@ -5,6 +5,15 @@ pipeline {
         maven "maven"
     }
 
+    environment {
+        APP_NAME   = "spring-docker-jenkins"
+        RELEASE_NO = "1.0.0"
+        DOCKER_USER = "kumarpremji"
+
+        IMAGE_NAME = "${env.DOCKER_USER}/${env.APP_NAME}"
+        IMAGE_TAG  = "${env.RELEASE_NO}-${env.BUILD_NUMBER}"
+    }
+
     stages {
 
         stage('SCM checkout') {
@@ -25,15 +34,8 @@ pipeline {
         stage('Build Image'){
             steps{
                 script{
-                    bat 'docker build -t kumarpremji/spring-docker-jenkins3.0 .'
+                    bat 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
                 }
-            }
-        }
-
-        stage('Check Docker') {
-            steps {
-                bat 'where docker'
-                bat 'docker --version'
             }
         }
 
@@ -41,7 +43,7 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'sdj', variable: 'dp')]) {
                     bat 'docker login -u kumarpremji -p %dp%'
-                    bat 'docker push kumarpremji/spring-docker-jenkins3.0'
+                    bat 'docker push ${IMAGE_NAME}:${IMAGE_TAG}'
                 }
             }
         }
