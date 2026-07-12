@@ -32,8 +32,8 @@ pipeline {
 
         stage('Deploy image to Hub'){
             steps{
-                withCredentials([string(credentialsId: 'docker-cred', variable: 'docker-cred')]) {
-                    bat 'docker login -u kumarpremji -p ${docker-cred}'
+                withCredentials([string(credentialsId: 'sdj', variable: 'dp')]) {
+                    bat 'docker login -u kumarpremji -p %dp%'
                     bat 'docker push kumarpremji/spring-docker-jenkins2.0'
                 }
             }
