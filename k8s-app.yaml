@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: kuber-app-container
-          image: kumarpremji/spring-docker-jenkins:1.0.0-6
+          image: kumarpremji/spring-docker-jenkins:1.0.0-9
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8083
