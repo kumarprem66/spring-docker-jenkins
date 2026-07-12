@@ -47,6 +47,12 @@ pipeline {
                 }
             }
         }
+        stage('Verify Kubernetes'){
+            steps {
+                bat 'kubectl config current-context'
+                bat 'kubectl cluster-info'
+            }
+        }
 
         stage('Deploy to kubernetes'){
             steps{
