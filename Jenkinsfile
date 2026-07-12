@@ -30,6 +30,13 @@ pipeline {
             }
         }
 
+        stage('Check Docker') {
+            steps {
+                bat 'where docker'
+                bat 'docker --version'
+            }
+        }
+
         stage('Deploy image to Hub'){
             steps{
                 withCredentials([string(credentialsId: 'sdj', variable: 'dp')]) {
