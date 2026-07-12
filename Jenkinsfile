@@ -53,9 +53,11 @@ pipeline {
                 KUBECONFIG = 'C:\\Users\\Prem.Kumar\\.kube\\config'
             }
             steps {
-                bat 'echo %KUBECONFIG%'
-                bat 'kubectl config current-context'
                 bat 'kubectl apply -f k8s-app.yaml'
+
+                bat 'kubectl set image deployment/dockerkuber-app-deployment dockerkuber-app-container=%IMAGE_NAME%:%IMAGE_TAG% -n kuberpremji'
+
+                bat 'kubectl rollout status deployment/dockerkuber-app-deployment -n kuberpremji'
             }
         }
 
@@ -64,7 +66,7 @@ pipeline {
                  KUBECONFIG = 'C:\\Users\\Prem.Kumar\\.kube\\config'
              }
             steps{
-                bat 'kubectl get pods'
+                bat 'kubectl get pods -n kuberpremji'
             }
         }
 
