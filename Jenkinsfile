@@ -60,6 +60,9 @@ pipeline {
         }
 
         stage('Verify Deployment'){
+             environment {
+                 KUBECONFIG = 'C:\\Users\\Prem.Kumar\\.kube\\config'
+             }
             steps{
                 bat 'kubectl get pods'
             }
