@@ -25,7 +25,7 @@ pipeline {
         stage('Build Image'){
             steps{
                 script{
-                    bat 'docker build -t kumarpremji/spring-docker-jenkins1.0 .'
+                    bat 'docker build -t kumarpremji/spring-docker-jenkins2.0 .'
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'docker-cred', variable: 'docker-cred')]) {
                     bat 'docker login -u kumarpremji -p ${docker-cred}'
-                    bat 'docker push kumarpremji/spring-docker-jenkins1.0'
+                    bat 'docker push kumarpremji/spring-docker-jenkins2.0'
                 }
             }
         }
