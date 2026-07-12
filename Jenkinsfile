@@ -22,6 +22,13 @@ pipeline {
                 bat 'mvn clean install'
             }
         }
+        stage('Build Image'){
+            steps{
+                script{
+                    bat 'docker build -t kumarpremji/spring-docker-jenkins1.0 .'
+                }
+            }
+        }
 
     }
 
