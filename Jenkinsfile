@@ -48,6 +48,18 @@ pipeline {
             }
         }
 
+        stage('Deploy to kubernetes'){
+            steps{
+                bat 'kubectl apply -f k8s-app.yaml'
+            }
+        }
+
+        stage('Verify Deployment'){
+            steps{
+                bat 'kubectl get pods'
+            }
+        }
+
     }
 
     post {
