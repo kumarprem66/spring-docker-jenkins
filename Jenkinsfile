@@ -6,12 +6,12 @@ pipeline {
     }
 
     environment {
-        APP_NAME   = "spring-docker-jenkins"
-        RELEASE_NO = "1.0.0"
+        APP_NAME    = "spring-docker-jenkins"
+        RELEASE_NO  = "1.0.0"
         DOCKER_USER = "kumarpremji"
 
-        IMAGE_NAME = "${env.DOCKER_USER}/${env.APP_NAME}"
-        IMAGE_TAG  = "${env.RELEASE_NO}-${env.BUILD_NUMBER}"
+        IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}"
+        IMAGE_TAG  = "${RELEASE_NO}-${BUILD_NUMBER}"
     }
 
     stages {
@@ -34,7 +34,7 @@ pipeline {
         stage('Build Image'){
             steps{
                 script{
-                    bat 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+                    bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .'
                 }
             }
         }
@@ -42,8 +42,10 @@ pipeline {
         stage('Deploy image to Hub'){
             steps{
                 withCredentials([string(credentialsId: 'sdj', variable: 'dp')]) {
-                    bat 'docker login -u kumarpremji -p %dp%'
-                    bat 'docker push ${IMAGE_NAME}:${IMAGE_TAG}'
+                    bat '''
+                    echo %dp% | docker login -u %DOCKER_USER% --password-stdin
+                    '''
+                    bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
                 }
             }
         }
